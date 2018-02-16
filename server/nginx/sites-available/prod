@@ -1,0 +1,41 @@
+server {
+    listen 80;
+    server_name ttcentral.com;
+    ssl off;
+
+    if ($http_x_forwarded_proto != "https") {
+        # rewrite ^(.*)$ https://$server_name$REQUEST_URI permanent;
+        rewrite ^(.*)$ https://$server_name$REQUEST_URI redirect;
+    }
+
+    access_log /var/log/ttcentral/prod-nginx-access.log;
+    error_log /var/log/ttcentral/prod-nginx-error.log;
+
+    location / {
+        client_max_body_size 100m;
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_read_timeout 900;
+        proxy_pass http://127.0.0.1:8000/;
+    }
+
+   location /js/ { alias /home/ubuntu/kanban-prod/kanban/static/js/; }
+   location /css/ { alias /home/ubuntu/kanban-prod/kanban/static/css/; }
+   location /font/ { alias /home/ubuntu/kanban-prod/kanban/static/font/; }
+   location /img/ { alias /home/ubuntu/kanban-prod/kanban/static/img/; }
+
+   # Needed for attached files on events
+   location /media/ { alias /home/ubuntu/kanban-prod/kanban/media/; }
+
+   # admin and other packages static files
+   location /staticfiles/ { alias /var/forterra/staticfiles/; }
+
+    location /favicon.ico {
+        alias /home/ubuntu/kanban-prod/kanban/static/favicon.ico;
+    }
+
+    # error_page 500 502 503 504 /path_to/50x.html;
+}
