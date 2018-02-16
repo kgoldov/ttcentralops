@@ -5,7 +5,9 @@ server {
 
     if ($http_x_forwarded_proto != "https") {
         # rewrite ^(.*)$ https://$server_name$REQUEST_URI permanent;
-        rewrite ^(.*)$ https://$server_name$REQUEST_URI redirect;
+        # There should never be a request with a $REQUEST_URI coming on port 80
+        #rewrite ^(.*)$ https://$server_name$REQUEST_URI redirect;
+        rewrite ^(.*)$ https://$server_name redirect;
     }
 
     access_log /var/log/ttcentral/prod-nginx-access.log;
@@ -18,7 +20,7 @@ server {
         proxy_redirect off;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Scheme $scheme;
-        proxy_read_timeout 900;
+        proxy_read_timeout 20;
         proxy_pass http://127.0.0.1:8000/;
     }
 
@@ -26,6 +28,7 @@ server {
    location /css/ { alias /home/ubuntu/kanban-prod/kanban/static/css/; }
    location /font/ { alias /home/ubuntu/kanban-prod/kanban/static/font/; }
    location /img/ { alias /home/ubuntu/kanban-prod/kanban/static/img/; }
+   location /html/ { alias /home/ubuntu/kanban-prod/kanban/static/html/; }
 
    # Needed for attached files on events
    location /media/ { alias /home/ubuntu/kanban-prod/kanban/media/; }

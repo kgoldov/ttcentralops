@@ -1,0 +1,16 @@
+.bashrc
+
+# For virtualenvwrapper
+
+export WORKON_HOME=~/.virtualenvs
+VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
+. /usr/local/bin/virtualenvwrapper.sh
+export PIP_VIRTUALENV_BASE=$WORKON_HOME
+export PIP_RESPECT_VIRTUALENV=true
+
+mkvirtualenv -p /usr/bin/python3 kanban
+
+link /etc/supervisor files to ttcentralops repo
+link /etc/nginx files to ttcentralops repo
+
+ln -s /etc/nginx/sites-available to sites-enabled
