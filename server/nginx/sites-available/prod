@@ -34,7 +34,7 @@ server {
    location /media/ { alias /home/ubuntu/kanban-prod/kanban/media/; }
 
    # admin and other packages static files
-   location /static/ { alias /var/www/ttcentral.com/; }
+   location /static/ { alias /var/www/ttcentral.com/static/; }
 
     location /favicon.ico {
         alias /home/ubuntu/kanban-prod/kanban/static/favicon.ico;
