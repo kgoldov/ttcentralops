@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd /home/ubuntu/kanban-prod
+env ENVIRONMENT=prod /home/ubuntu/.virtualenvs/kanban/bin/python manage.py close_past_events.py >> /var/log/ttcentral/prod/daily_cron.log
