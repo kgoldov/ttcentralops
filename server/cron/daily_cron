@@ -2,3 +2,14 @@
 
 cd /home/ubuntu/kanban-prod
 env ENVIRONMENT=prod /home/ubuntu/.virtualenvs/kanban/bin/python manage.py close_past_events.py >> /var/log/ttcentral/prod/daily_cron.log
+
+export PGUSER=ttcentral
+export PGHOST=localhost
+
+TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
+PROD_DB=kanban_prod
+DUMP=/home/ubuntu/db/$TIMESTAMP.$PROD_DB.dump.sql
+
+pg_dump -f $DUMP $PROD_DB
+
+aws s3 cp $DUMP s3://backup.ttcentral.com/
