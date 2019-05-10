@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-
+(
 cd /home/ubuntu/kanban-prod
 export DJANGO_SETTINGS_MODULE=kanban.settings.prod
 export ENVIRONMENT=prod
@@ -17,3 +17,4 @@ DUMP=/home/ubuntu/db/$TIMESTAMP.$PROD_DB.dump.sql
 pg_dump -f $DUMP $PROD_DB
 
 aws s3 cp $DUMP s3://backup.ttcentral.com/
+) > /var/log/ttcentral/prod/daily_cron.log 2>&1
