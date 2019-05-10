@@ -4,7 +4,7 @@
 cd /home/ubuntu/kanban-prod
 export DJANGO_SETTINGS_MODULE=kanban.settings.prod
 export ENVIRONMENT=prod
-/home/ubuntu/.virtualenvs/kanban/bin/python manage.py close_past_events.py
+/home/ubuntu/.virtualenvs/kanban/bin/python manage.py close_past_events
 
 export PGUSER=ttcentral
 export PGHOST=localhost
