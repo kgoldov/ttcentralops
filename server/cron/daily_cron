@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+
 cd /home/ubuntu/kanban-prod
-env ENVIRONMENT=prod /home/ubuntu/.virtualenvs/kanban/bin/python manage.py close_past_events.py >> /var/log/ttcentral/prod/daily_cron.log
+export DJANGO_SETTINGS_MODULE=kanban.settings.prod
+export ENVIRONMENT=prod
+/home/ubuntu/.virtualenvs/kanban/bin/python manage.py close_past_events.py
 
 export PGUSER=ttcentral
 export PGHOST=localhost
+export PGPASSFILE=/home/ubuntu/.pgpass
 
 TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
 PROD_DB=kanban_prod
