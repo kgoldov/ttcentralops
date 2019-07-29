@@ -18,5 +18,5 @@ pg_dump -f $DUMP $PROD_DB
 
 export AWS_CONFIG_FILE=/home/ubuntu/.aws/config
 export AWS_SHARED_CREDENTIALS_FILE=/home/ubuntu/.aws/credentials
-aws s3 cp $DUMP s3://backup.ttcentral.com/
+aws s3 cp $DUMP s3://dbbackup.ttcentral.com/
 ) > /var/log/ttcentral/prod/daily_cron.log 2>&1
