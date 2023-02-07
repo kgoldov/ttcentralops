@@ -1,8 +1,11 @@
-emacs
-nginx
+python-is-python3
+add-apt-repository universe
 python3-pip
 python3-virtualenv
-sudo pip3 install virtualenvwrapper
+pip install virtualenvwrapper
+emacs
+
 supervisor
 postgresql
 postgresql-contrib
+nginx

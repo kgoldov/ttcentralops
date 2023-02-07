@@ -1,16 +1,28 @@
-.bashrc
+Edit .bashrc
 
 # For virtualenvwrapper
-
 export WORKON_HOME=~/.virtualenvs
 VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
 . /usr/local/bin/virtualenvwrapper.sh
 export PIP_VIRTUALENV_BASE=$WORKON_HOME
 export PIP_RESPECT_VIRTUALENV=true
 
-mkvirtualenv -p /usr/bin/python3 kanban
+Then ...
+mkvirtualenv kanban
+mkvirtualenv staging
+mkvirtualenv test
 
-link /etc/supervisor files to ttcentralops repo
-link /etc/nginx files to ttcentralops repo
+cd
+git clone git@github.com:kgoldov/ttcentralops.git
 
-ln -s /etc/nginx/sites-available to sites-enabled
+# link /etc/supervisor files to ttcentralops repo
+cd /etc/supervisor/conf.d
+ln -s /home/ubuntu/ttcentralops/server/supervisor/conf.d/kanban-* .
+
+# link /etc/nginx files to ttcentralops repo
+cd /etc/nginx/sites-available
+ln -s /home/ubuntu/ttcentralops/server/nginx/sites-available/* .
+cd /etc/nginx/sites-enabled
+ln -s ../sites-available/prod .
+
+git clone git@github.com:kgoldov/kanban.git
