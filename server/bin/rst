@@ -1,0 +1,10 @@
+TIER=$1
+
+if [ "$TIER" ] ; then
+   echo "Restarting $TIER"
+   echo "restart kanban-$TIER"| sudo supervisorctl
+else
+   echo "restart all"| sudo supervisorctl
+fi
+
+

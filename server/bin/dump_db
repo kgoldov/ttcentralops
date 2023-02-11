@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
+
+DB=kanban_$1
+
+DUMP=~/db/$TIMESTAMP.$DB.dump.sql
+
+pg_dump -f $DUMP $DB
+

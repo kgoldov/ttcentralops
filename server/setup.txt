@@ -15,7 +15,7 @@ mkvirtualenv test
 cd
 git clone git@github.com:kgoldov/ttcentralops.git
 
-# link /etc/supervisor files to ttcentralops repo
+# link ttcentralops files /etc/supervisor
 cd /etc/supervisor/conf.d
 ln -s /home/ubuntu/ttcentralops/server/supervisor/conf.d/kanban-* .
 
@@ -25,27 +25,25 @@ ln -s /home/ubuntu/ttcentralops/server/nginx/sites-available/* .
 cd /etc/nginx/sites-enabled
 ln -s ../sites-available/prod.conf .
 
-git clone git@github.com:kgoldov/kanban.git
+git clone git@github.com:kgoldov/kanban.git kanban-prod
 
 # copy settings_local.py
 
 # as postgres user
-createdb ttcentral
-
 psql
 alter user <username> with encrypted password '<password>';
 alter user ttcentral createdb;
 
+# as ubuntu user
+createdb kanban_prod
+
 mkvirtualenv kanban
 echo "export  ENVIRONMENT=prod
-export DJANGO_SETTINGS_MODULE=kanban.settings.staging" >> ~/.virtualenvs/kanban/bin/postactivate
-
-mkvirtualenv test
-echo "export  ENVIRONMENT=test
-      export DJANGO_SETTINGS_MODULE=kanban.settings.test" >> ~/.virtualenvs/test/bin/postactivate
+export DJANGO_SETTINGS_MODULE=kanban.settings.prod" >> ~/.virtualenvs/kanban/bin/postactivate
 echo "unset ENVIRONMENT
-      unset DJANGO_SETTINGS_MODULE" >> ~/.virtualenvs/test/bin/predeactivate
+      unset DJANGO_SETTINGS_MODULE" >> ~/.virtualenvs/kanban/bin/predeactivate
 
+chmod o+x,o+r /home/ubuntu
 sudo bash
 mkdir /var/log/ttcentral
 chgrp ubuntu /var/log/ttcentral
@@ -57,3 +55,5 @@ mkdir test prod staging
 # Install letsencrypt
 # https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/
 
+# set up /etc/cron.daily/daily_cron for db backup to s3
+# set up /home/ubuntu/prod_cron for event management

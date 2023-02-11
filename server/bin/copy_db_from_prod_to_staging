@@ -1,0 +1,17 @@
+#!/bin/bash
+
+TIMESTAMP=`date +"%Y-%m-%d_%H-%M-%S"`
+
+PROD_DB=kanban_prod
+
+STAGING_DB=kanban_staging
+
+DUMP=~/db/$TIMESTAMP.$PROD_DB.sql
+
+pg_dump -f $DUMP $PROD_DB
+
+dropdb $STAGING_DB
+createdb $STAGING_DB
+
+psql $STAGING_DB < $DUMP 2> ~/db/dump.error
+
