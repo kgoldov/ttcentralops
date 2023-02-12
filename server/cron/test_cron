@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+(
+cd /home/ubuntu/kanban-test
+export DJANGO_SETTINGS_MODULE=kanban.settings.test
+export ENVIRONMENT=test
+/home/ubuntu/.virtualenvs/kanban/bin/python manage.py event_management
+
+) >> /var/log/ttcentral/test/event_management.log 2>&1
