@@ -57,3 +57,5 @@ mkdir test prod staging
 
 # set up /etc/cron.daily/daily_cron for db backup to s3
 # set up /home/ubuntu/prod_cron for event management
+
+./manage collectstatic
