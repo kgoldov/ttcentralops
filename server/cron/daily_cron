@@ -10,8 +10,12 @@ PROD_DB=kanban_prod
 DUMP=/home/ubuntu/db/$TIMESTAMP.$PROD_DB.dump.sql
 
 pg_dump -f $DUMP $PROD_DB
+MEDIA_BACKUP=/home/ubuntu/backup/$TIMESTAMP.MEDIA.tar.gz
+cd /var/www/ttcentral.com/prod/
+/usr/bin/tar czf $MEDIA_BACKUP media
 
 export AWS_CONFIG_FILE=/home/ubuntu/.aws/config
 export AWS_SHARED_CREDENTIALS_FILE=/home/ubuntu/.aws/credentials
 aws s3 cp $DUMP s3://dbbackup.ttcentral.com/
+aws s3 cp $MEDIA_BACKUP s3://mediabackup.ttcentral.com/
 ) > /var/log/ttcentral/prod/daily_cron.log 2>&1
