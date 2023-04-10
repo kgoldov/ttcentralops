@@ -55,7 +55,10 @@ mkdir test prod staging
 # Install letsencrypt
 # https://www.nginx.com/blog/using-free-ssltls-certificates-from-lets-encrypt-with-nginx/
 
+# Install aws cli for daily cron backups to s3
+# https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 # set up /etc/cron.daily/daily_cron for db backup to s3
 # set up /home/ubuntu/prod_cron for event management
 
 ./manage collectstatic
+
